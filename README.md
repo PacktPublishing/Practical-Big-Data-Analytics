@@ -20,11 +20,11 @@ The code will look like the following:
 "Delta
 ```
 
-1. A general knowledge of Unix would be very helpful, although isn't mandatory
-2. Access to a computer with an internet connection will be needed in order to
+* A general knowledge of Unix would be very helpful, although isn't mandatory
+* Access to a computer with an internet connection will be needed in order to
 download the necessary tools and software used in the exercises
-3. No prior knowledge of the subject area has been assumed as such
-4. Installation instructions for all the software and tools have been provided in
+* No prior knowledge of the subject area has been assumed as such
+* Installation instructions for all the software and tools have been provided in
 Chapter 3, The Analytics Toolkit.
 
 ## Related Products
