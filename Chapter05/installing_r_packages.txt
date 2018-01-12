@@ -1,0 +1,1 @@
+install.packages(c("shiny","shinydashboard","data.table",                   "DT","rjson","jsonlite","shinyjs","devtools"))library(devtools)devtools::install_github('kxsystems/rkdb', quiet=TRUE)

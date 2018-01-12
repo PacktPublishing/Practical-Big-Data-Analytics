@@ -1,0 +1,454 @@
+
+[cloudera@quickstart ~]$ lsb_release -a
+LSB Version:	:base-4.0-amd64:base-4.0-noarch:core-4.0-amd64:core-4.0-noarch
+Distributor ID:	CentOS
+Description:	CentOS release 6.7 (Final)
+Release:	6.7
+Codename:	Final
+
+
+[root@quickstart cloudera]# sudo nano /etc/yum.repos.d/mongodb-org-3.4.repo
+
+[cloudera@quickstart ~]$ sudo yum install -y mongodb-org
+Loaded plugins: fastestmirror, security
+Setting up Install Process
+Determining fastest mirrors
+epel/metalink                                                         |  12 kB     00:00     
+ * base: mirrors.mit.edu
+ * epel: mirror.math.princeton.edu
+ * extras: repos.dfw.quadranet.com
+ * updates: mirrors.tripadvisor.com
+base                                                                  | 3.7 kB     00:00     
+base/primary_db                                                       | 4.7 MB     00:00     
+cloudera-cdh5                                                         |  951 B     00:00     
+cloudera-cdh5/primary                                                 |  43 kB     00:00     
+cloudera-cdh5                                                                        146/146
+cloudera-gplextras5                                                   |  951 B     00:00     
+cloudera-gplextras5/primary                                           | 2.4 kB     00:00     
+cloudera-gplextras5                                                                      9/9
+cloudera-kafka                                                        |  951 B     00:00     
+cloudera-kafka/primary                                                | 1.9 kB     00:00     
+cloudera-kafka                                                                           4/4
+cloudera-manager                                                      |  951 B     00:00     
+cloudera-manager/primary                                              | 4.3 kB     00:00     
+cloudera-manager                                                                         7/7
+epel                                                                  | 4.3 kB     00:00     
+epel/primary_db                                                       | 5.9 MB     00:00     
+extras                                                                | 3.4 kB     00:00     
+extras/primary_db                                                     |  29 kB     00:00     
+mongodb-org-3.4                                                       | 2.5 kB     00:00     
+mongodb-org-3.4/primary_db                                            |  34 kB     00:00     
+updates                                                               | 3.4 kB     00:00     
+updates/primary_db                                                    | 2.5 MB     00:00     
+Resolving Dependencies
+--> Running transaction check
+---> Package mongodb-org.x86_64 0:3.4.6-1.el6 will be installed
+--> Processing Dependency: mongodb-org-tools = 3.4.6 for package: mongodb-org-3.4.6-1.el6.x86_64
+--> Processing Dependency: mongodb-org-shell = 3.4.6 for package: mongodb-org-3.4.6-1.el6.x86_64
+--> Processing Dependency: mongodb-org-server = 3.4.6 for package: mongodb-org-3.4.6-1.el6.x86_64
+--> Processing Dependency: mongodb-org-mongos = 3.4.6 for package: mongodb-org-3.4.6-1.el6.x86_64
+--> Running transaction check
+---> Package mongodb-org-mongos.x86_64 0:3.4.6-1.el6 will be installed
+---> Package mongodb-org-server.x86_64 0:3.4.6-1.el6 will be installed
+---> Package mongodb-org-shell.x86_64 0:3.4.6-1.el6 will be installed
+---> Package mongodb-org-tools.x86_64 0:3.4.6-1.el6 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=============================================================================================
+ Package                    Arch           Version             Repository               Size
+=============================================================================================
+Installing:
+ mongodb-org                x86_64         3.4.6-1.el6         mongodb-org-3.4         5.8 k
+Installing for dependencies:
+ mongodb-org-mongos         x86_64         3.4.6-1.el6         mongodb-org-3.4          12 M
+ mongodb-org-server         x86_64         3.4.6-1.el6         mongodb-org-3.4          20 M
+ mongodb-org-shell          x86_64         3.4.6-1.el6         mongodb-org-3.4          11 M
+ mongodb-org-tools          x86_64         3.4.6-1.el6         mongodb-org-3.4          49 M
+
+Transaction Summary
+=============================================================================================
+Install       5 Package(s)
+
+Total download size: 91 M
+Installed size: 258 M
+Downloading Packages:
+(1/5): mongodb-org-3.4.6-1.el6.x86_64.rpm                             | 5.8 kB     00:00     
+(2/5): mongodb-org-mongos-3.4.6-1.el6.x86_64.rpm                      |  12 MB     00:00     
+(3/5): mongodb-org-server-3.4.6-1.el6.x86_64.rpm                      |  20 MB     00:00     
+(4/5): mongodb-org-shell-3.4.6-1.el6.x86_64.rpm                       |  11 MB     00:00     
+(5/5): mongodb-org-tools-3.4.6-1.el6.x86_64.rpm                       |  49 MB     00:09     
+---------------------------------------------------------------------------------------------
+Total                                                        7.8 MB/s |  91 MB     00:11     
+warning: rpmts_HdrFromFdno: Header V3 RSA/SHA1 Signature, key ID a15703c6: NOKEY
+Retrieving key from https://www.mongodb.org/static/pgp/server-3.4.asc
+Importing GPG key 0xA15703C6:
+ Userid: "MongoDB 3.4 Release Signing Key <packaging@mongodb.com>"
+ From  : https://www.mongodb.org/static/pgp/server-3.4.asc
+Running rpm_check_debug
+Running Transaction Test
+Transaction Test Succeeded
+Running Transaction
+  Installing : mongodb-org-shell-3.4.6-1.el6.x86_64                                      1/5 
+  Installing : mongodb-org-mongos-3.4.6-1.el6.x86_64                                     2/5 
+  Installing : mongodb-org-tools-3.4.6-1.el6.x86_64                                      3/5 
+  Installing : mongodb-org-server-3.4.6-1.el6.x86_64                                     4/5 
+  Installing : mongodb-org-3.4.6-1.el6.x86_64                                            5/5 
+  Verifying  : mongodb-org-3.4.6-1.el6.x86_64                                            1/5 
+  Verifying  : mongodb-org-server-3.4.6-1.el6.x86_64                                     2/5 
+  Verifying  : mongodb-org-tools-3.4.6-1.el6.x86_64                                      3/5 
+  Verifying  : mongodb-org-mongos-3.4.6-1.el6.x86_64                                     4/5 
+  Verifying  : mongodb-org-shell-3.4.6-1.el6.x86_64                                      5/5 
+
+Installed:
+  mongodb-org.x86_64 0:3.4.6-1.el6                                                           
+
+Dependency Installed:
+  mongodb-org-mongos.x86_64 0:3.4.6-1.el6       mongodb-org-server.x86_64 0:3.4.6-1.el6      
+  mongodb-org-shell.x86_64 0:3.4.6-1.el6        mongodb-org-tools.x86_64 0:3.4.6-1.el6       
+
+Complete!
+
+
+### You need to start the mongo daemon before you can use it ###
+[cloudera@quickstart ~]$ mongo
+MongoDB shell version v3.4.6
+connecting to: mongodb://127.0.0.1:27017
+2017-07-30T10:50:58.708-0700 W NETWORK  [thread1] Failed to connect to 127.0.0.1:27017, in(checking socket for error after poll), reason: Connection refused
+2017-07-30T10:50:58.708-0700 E QUERY    [thread1] Error: couldn't connect to server 127.0.0.1:27017, connection attempt failed :
+connect@src/mongo/shell/mongo.js:237:13
+@(connect):1:6
+exception: connect failed
+
+
+### Create mongo dbpath ###
+
+[cloudera@quickstart ~]$ mkdir mongodata
+
+### Start mongod ###
+[cloudera@quickstart ~]$ mongod --dbpath mongodata
+2017-07-30T10:52:17.200-0700 I CONTROL  [initandlisten] MongoDB starting : pid=16093 port=27017 dbpath=mongodata 64-bit host=quickstart.cloudera
+2017-07-30T10:52:17.200-0700 I CONTROL  [initandlisten] db version v3.4.6
+2017-07-30T10:52:17.200-0700 I CONTROL  [initandlisten] git version: c55eb86ef46ee7aede3b1e2a5d184a7df4bfb5b5
+2017-07-30T10:52:17.200-0700 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.1e-fips 11 Feb 2013
+2017-07-30T10:52:17.200-0700 I CONTROL  [initandlisten] allocator: tcmalloc
+2017-07-30T10:52:17.200-0700 I CONTROL  [initandlisten] modules: none
+2017-07-30T10:52:17.200-0700 I CONTROL  [initandlisten] build environment:
+2017-07-30T10:52:17.200-0700 I CONTROL  [initandlisten]     distmod: rhel62
+2017-07-30T10:52:17.200-0700 I CONTROL  [initandlisten]     distarch: x86_64
+2017-07-30T10:52:17.200-0700 I CONTROL  [initandlisten]     target_arch: x86_64
+2017-07-30T10:52:17.200-0700 I CONTROL  [initandlisten] options: { storage: { dbPath: "mongodata" } }
+2017-07-30T10:52:17.228-0700 I STORAGE  [initandlisten] 
+2017-07-30T10:52:17.228-0700 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+2017-07-30T10:52:17.228-0700 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+2017-07-30T10:52:17.228-0700 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=1403M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),checkpoint=(wait=60,log_size=2GB),statistics_log=(wait=0),
+2017-07-30T10:52:17.298-0700 I CONTROL  [initandlisten] 
+2017-07-30T10:52:17.298-0700 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2017-07-30T10:52:17.298-0700 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2017-07-30T10:52:17.298-0700 I CONTROL  [initandlisten] 
+2017-07-30T10:52:17.298-0700 I CONTROL  [initandlisten] 
+2017-07-30T10:52:17.298-0700 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.
+2017-07-30T10:52:17.298-0700 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+2017-07-30T10:52:17.298-0700 I CONTROL  [initandlisten] 
+2017-07-30T10:52:17.306-0700 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory 'mongodata/diagnostic.data'
+2017-07-30T10:52:17.320-0700 I INDEX    [initandlisten] build index on: admin.system.version properties: { v: 2, key: { version: 1 }, name: "incompatible_with_version_32", ns: "admin.system.version" }
+2017-07-30T10:52:17.320-0700 I INDEX    [initandlisten] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2017-07-30T10:52:17.321-0700 I INDEX    [initandlisten] build index done.  scanned 0 total records. 0 secs
+2017-07-30T10:52:17.321-0700 I COMMAND  [initandlisten] setting featureCompatibilityVersion to 3.4
+2017-07-30T10:52:17.321-0700 I NETWORK  [thread1] waiting for connections on port 27017
+
+
+### In a separate terminal, download data files - laureates.json and country.json ###
+
+[cloudera@quickstart ~]$ cd mongodata
+[cloudera@quickstart mongodata]$ curl -o laureates.json "http://api.nobelprize.org/v1/laureate.json
+> "^C
+[cloudera@quickstart mongodata]$ curl -o laureates.json "http://api.nobelprize.org/v1/laureate.json"
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  428k    0  428k    0     0   292k      0 --:--:--  0:00:01 --:--:--  354k
+[cloudera@quickstart mongodata]$ 
+
+cat laureates.json | sed 's/^{"laureates"://g' | sed 's/}$//g' > mongofile.json
+
+### Download laureates.json
+
+[cloudera@quickstart mongodata]$ cat laureates.json | sed 's/^{"laureates"://g' | sed 's/}$//g' > mongofile.json
+
+[cloudera@quickstart mongodata]$ mongoimport --jsonArray --db nobel --collection laureates --file mongofile.json
+2017-07-30T11:06:35.228-0700	connected to: localhost
+2017-07-30T11:06:35.295-0700	imported 910 documents
+
+### Download country.json
+
+[cloudera@quickstart mongodata]$ curl -o country.json "https://raw.githubusercontent.com/xbsd/packtbigdata/master/country.json"
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  113k  100  113k    0     0   360k      0 --:--:-- --:--:-- --:--:--  885k
+
+[cloudera@quickstart mongodata]$ mongoimport --jsonArray --db nobel --collection country --file country.json
+2017-07-30T12:10:35.554-0700	connected to: localhost
+2017-07-30T12:10:35.580-0700	imported 250 documents
+
+####
+
+
+### MONGO SHELL ###
+[cloudera@quickstart mongodata]$ mongo
+MongoDB shell version v3.4.6
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 3.4.6
+Server has startup warnings: 
+2017-07-30T10:52:17.228-0700 I STORAGE  [initandlisten] 
+2017-07-30T10:52:17.228-0700 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+2017-07-30T10:52:17.228-0700 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+2017-07-30T10:52:17.298-0700 I CONTROL  [initandlisten] 
+2017-07-30T10:52:17.298-0700 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2017-07-30T10:52:17.298-0700 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2017-07-30T10:52:17.298-0700 I CONTROL  [initandlisten] 
+2017-07-30T10:52:17.298-0700 I CONTROL  [initandlisten] 
+2017-07-30T10:52:17.298-0700 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.
+2017-07-30T10:52:17.298-0700 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+2017-07-30T10:52:17.298-0700 I CONTROL  [initandlisten] 
+> use nobel
+switched to db nobel
+> show collections
+country
+laureates
+> 
+
+### Collections in MongoDB are the equivalent to tables in SQL
+
+### 1. Common Operations
+
+### See collection statistics
+
+db.laureates.stats()
+
+	"ns" : "nobel.laureates", # Name Space
+	"size" : 484053,          # Size in Bytes
+	"count" : 910,            # Number of Records
+	"avgObjSize" : 531,       # Average Object Size
+	"storageSize" : 225280,   # Data size
+
+
+# Check space used
+
+> db.laureates.storageSize()
+225280
+
+
+# See number of records
+
+> db.laureates.count()
+910
+# See number of distinct prize categories
+
+> db.laureates.distinct("prizes.category")
+[
+	"physics",
+	"chemistry",
+	"peace",
+	"medicine",
+	"literature",
+	"economics"
+]
+
+
+### See first record for laureates
+
+> db.laureates.findOne()
+
+{
+	"_id" : ObjectId("597e202bcd8724f48de485d4"),
+	"id" : "1",
+	"firstname" : "Wilhelm Conrad",
+	"surname" : "Röntgen",
+	"born" : "1845-03-27",
+	"died" : "1923-02-10",
+	"bornCountry" : "Prussia (now Germany)",
+	"bornCountryCode" : "DE",
+	"bornCity" : "Lennep (now Remscheid)",
+	"diedCountry" : "Germany",
+	"diedCountryCode" : "DE",
+	"diedCity" : "Munich",
+	"gender" : "male",
+	"prizes" : [
+		{
+			"year" : "1901",
+			"category" : "physics",
+			"share" : "1",
+			"motivation" : "\"in recognition of the extraordinary services he has rendered by the discovery of the remarkable rays subsequently named after him\"",
+			"affiliations" : [
+				{
+					"name" : "Munich University",
+					"city" : "Munich",
+					"country" : "Germany"
+				}
+			]
+		}
+	]
+}
+
+### See all records for laureates
+
+> db.laureates.find()
+
+{ "_id" : ObjectId("597e202bcd8724f48de485d4"), "id" : "1", "firstname" : "Wilhelm Conrad", "surname" : "Röntgen", "born" : "1845-03-27", "died" : "1923-02-10", "bornCountry" : "Prussia (now Germany)", "bornCountryCode" : "DE", "bornCity" : "Lennep (now Remscheid)", "diedCountry" : "Germany", "diedCountryCode" : "DE", "diedCity" : "Munich", "gender" : "male", "prizes" : [ { "year" : "1901", "category" : "physics", "share" : "1", "motivation" : "\"in recognition of the extraordinary services he has rendered by the discovery of the remarkable rays subsequently named after him\"", "affiliations" : [ { "name" : "Munich University", "city" : "Munich", "country" : "Germany" } ] } ] }
+
+...
+
+# Query a field - Find all Nobel Laureates who were male
+
+> db.laureates.find({"gender":"male"})
+
+{ "_id" : ObjectId("597e202bcd8724f48de485d4"), "id" : "1", "firstname" : "Wilhelm Conrad", "surname" : "Röntgen", "born" : "1845-03-27", "died" : "1923-02-10", "bornCountry" : "Prussia (now Germany)", "bornCountryCode" : "DE", "bornCity" : "Lennep (now Remscheid)", "diedCountry" : "Germany", "diedCountryCode" : "DE", "diedCity" : "Munich", "gender" : "male", "prizes" : [ { "year" : "1901", "category" : "physics", "share" : "1", "motivation" : "\"in recognition of the extraordinary services he has rendered by the discovery of the remarkable rays subsequently named after him\"", "affiliations" : [ { "name" : "Munich University", "city" : "Munich", "country" : "Germany" } ] } ] }
+
+{ "_id" : ObjectId("597e202bcd8724f48de485d5"), "id" : "2", "firstname" : "Hendrik Antoon", "surname" : "Lorentz", "born" : "1853-07-18", "died" : "1928-02-04", "bornCountry" : "the Netherlands", "bornCountryCode" : "NL", "bornCity" : "Arnhem", "diedCountry" : "the Netherlands", "diedCountryCode" : "NL", "gender" : "male", "prizes" : [ { "year" : "1902", "category" : "physics", "share" : "2", "motivation" : "\"in recognition of the extraordinary service they rendered by their researches into the influence of magnetism upon radiation phenomena\"", "affiliations" : [ { "name" : "Leiden University", "city" : "Leiden", "country" : "the Netherlands" } ] } ] }
+...
+
+# Query a field - Find all Nobel Laureates who were born in the US and received a Nobel Prize in Physics
+# Note that here we have a nested field (category is under prizes as shown). Hence, we will use the dot notation.
+
+> db.laureates.find({"bornCountryCode":"US", "prizes.category":"physics", "bornCity": /Chicago/})
+
+{ "_id" : ObjectId("597e202bcd8724f48de48638"), "id" : "103", "firstname" : "Ben Roy", "surname" : "Mottelson", "born" : "1926-07-09", "died" : "0000-00-00", "bornCountry" : "USA", "bornCountryCode" : "US", "bornCity" : "Chicago, IL", "gender" : "male", "prizes" : [ { "year" : "1975", "category" : "physics", "share" : "3", "motivation" : "\"for the discovery of the connection between collective motion and particle motion in atomic nuclei and the development of the theory of the structure of the atomic nucleus based on this connection\"", "affiliations" : [ { "name" : "Nordita", "city" : "Copenhagen", "country" : "Denmark" } ] } ] }
+...
+
+# Using Comparison Operators
+
+# Find Nobel Laureates born in either India or Egypt
+
+> db.laureates.find ( { bornCountryCode: { $in: ["IN","EG"] } } )
+
+{ "_id" : ObjectId("597e202bcd8724f48de485f7"), "id" : "37", "firstname" : "Sir Chandrasekhara Venkata", "surname" : "Raman", "born" : "1888-11-07", "died" : "1970-11-21", "bornCountry" : "India", "bornCountryCode" : "IN", "bornCity" : "Tiruchirappalli", "diedCountry" : "India", "diedCountryCode" : "IN", "diedCity" : "Bangalore", "gender" : "male", "prizes" : [ { "year" : "1930", "category" : "physics", "share" : "1", "motivation" : "\"for his work on the scattering of light and for the discovery of the effect named after him\"", "affiliations" : [ { "name" : "Calcutta University", "city" : "Calcutta", "country" : "India" } ] } ] }
+
+{ "_id" : ObjectId("597e202bcd8724f48de486b5"), "id" : "230", "firstname" : "Dorothy Crowfoot", "surname" : "Hodgkin", "born" : "1910-05-12", "died" : "1994-07-29", "bornCountry" : "Egypt", "bornCountryCode" : "EG", "bornCity" : "Cairo", "diedCountry" : "United Kingdom", "diedCountryCode" : "GB", "diedCity" : "Shipston-on-Stour", "gender" : "female", "prizes" : [ { "year" : "1964", "category" : "chemistry", "share" : "1", "motivation" : "\"for her determinations by X-ray techniques of the structures of important biochemical substances\"", "affiliations" : [ { "name" : "University of Oxford, Royal Society", "city" : "Oxford", "country" : "United Kingdom" } ] } ] }
+...
+
+# Using Multiple Comparison Operators
+
+# Find Nobel laureates who were born in either US or China and won prize in either Physics or Chemistry
+
+db.laureates.find( {
+    $and : [
+        { $or : [ { bornCountryCode : "US" }, { bornCountryCode : "CN" } ] },
+        { $or : [ { "prizes.category" : "physics" }, { "prizes.category" : "chemistry" }  ] }
+    ]
+} )
+
+
+> db.laureates.find( {
+...     $and : [
+...         { $or : [ { bornCountryCode : "US" }, { bornCountryCode : "CN" } ] },
+...         { $or : [ { "prizes.category" : "physics" }, { "prizes.category" : "chemistry" }  ] }
+...     ]
+... } )
+
+{ "_id" : ObjectId("597e202bcd8724f48de485ee"), "id" : "28", "firstname" : "Robert Andrews", "surname" : "Millikan", "born" : "1868-03-22", "died" : "1953-12-19", "bornCountry" : "USA", "bornCountryCode" : "US", "bornCity" : "Morrison, IL", "diedCountry" : "USA", "diedCountryCode" : "US", "diedCity" : "San Marino, CA", "gender" : "male", "prizes" : [ { "year" : "1923", "category" : "physics", "share" : "1", "motivation" : "\"for his work on the elementary charge of electricity and on the photoelectric effect\"", "affiliations" : [ { "name" : "California Institute of Technology (Caltech)", "city" : "Pasadena, CA", "country" : "USA" } ] } ] }
+...
+
+# To count and aggregate total prizes by year
+
+db.laureates.aggregate(
+  {$group: {_id: '$prizes.year', totalPrizes: {$sum: 1}}}, 
+  {$sort: {totalPrizes: -1}}
+);
+
+> db.laureates.aggregate(
+...   {$group: {_id: '$prizes.year', totalPrizes: {$sum: 1}}}, 
+...   {$sort: {totalPrizes: -1}}
+... );
+{ "_id" : [ "2001" ], "totalPrizes" : 15 }
+{ "_id" : [ "2014" ], "totalPrizes" : 13 }
+{ "_id" : [ "2002" ], "totalPrizes" : 13 }
+{ "_id" : [ "2000" ], "totalPrizes" : 13 }
+{ "_id" : [ "2005" ], "totalPrizes" : 13 }
+{ "_id" : [ "2011" ], "totalPrizes" : 13 }
+{ "_id" : [ "2013" ], "totalPrizes" : 13 }
+{ "_id" : [ "2009" ], "totalPrizes" : 13 }
+{ "_id" : [ "1996" ], "totalPrizes" : 13 }
+{ "_id" : [ "2008" ], "totalPrizes" : 12 }
+
+
+# To count and aggregate total prizes by country of birth
+
+db.laureates.aggregate(
+  {$group: {_id: '$bornCountry', totalPrizes: {$sum: 1}}},
+  {$sort: {totalPrizes: -1}}
+);
+
+> db.laureates.aggregate(
+...   {$group: {_id: '$bornCountry', totalPrizes: {$sum: 1}}},
+...   {$sort: {totalPrizes: -1}}
+... );
+{ "_id" : "USA", "totalPrizes" : 257 }
+{ "_id" : "United Kingdom", "totalPrizes" : 84 }
+{ "_id" : "Germany", "totalPrizes" : 61 }
+{ "_id" : "France", "totalPrizes" : 51 }
+{ "_id" : "Sweden", "totalPrizes" : 29 }
+{ "_id" : null, "totalPrizes" : 29 }
+{ "_id" : "Japan", "totalPrizes" : 24 }
+
+
+
+
+# Using Regular Expressions: Find count of nobel laureates by country of birth whose prize was related to 'radiation'
+
+db.laureates.aggregate(
+  {$match : { "prizes.motivation" : /radiation/ }},
+  {$group: {_id: '$bornCountry', totalPrizes: {$sum: 1}}}, 
+  {$sort: {totalPrizes: -1}}
+);
+
+> db.laureates.aggregate(
+...   {$match : { "prizes.motivation" : /radiation/ }},
+...   {$group: {_id: '$bornCountry', totalPrizes: {$sum: 1}}}, 
+...   {$sort: {totalPrizes: -1}}
+... );
+{ "_id" : "USA", "totalPrizes" : 4 }
+{ "_id" : "Germany", "totalPrizes" : 2 }
+{ "_id" : "the Netherlands", "totalPrizes" : 2 }
+{ "_id" : "United Kingdom", "totalPrizes" : 2 }
+{ "_id" : "France", "totalPrizes" : 1 }
+{ "_id" : "Prussia (now Russia)", "totalPrizes" : 1 }
+
+
+#### Result: We see that the highest number of prizes (in which radiation was mentioned as a key-word) was the US
+
+# Left Join
+
+db.laureates.aggregate(
+  {$lookup: { from: "country", localField: "bornCountryCode", foreignField: "countryCode", as: "countryInfo" }})
+
+> db.laureates.aggregate(
+...   {$lookup: { from: "country", localField: "bornCountryCode", foreignField: "countryCode", as: "countryInfo" }})
+
+{ "_id" : ObjectId("597e202bcd8724f48de485d4"), "id" : "1", "firstname" : "Wilhelm Conrad", "surname" : "Röntgen", "born" : "1845-03-27", "died" : "1923-02-10", "bornCountry" : "Prussia (now Germany)", "bornCountryCode" : "DE", "bornCity" : "Lennep (now Remscheid)", "diedCountry" : "Germany", "diedCountryCode" : "DE", "diedCity" : "Munich", "gender" : "male", "prizes" : [ { "year" : "1901", "category" : "physics", "share" : "1", "motivation" : "\"in recognition of the extraordinary services he has rendered by the discovery of the remarkable rays subsequently named after him\"", "affiliations" : [ { "name" : "Munich University", "city" : "Munich", "country" : "Germany" } ] } ], "countryInfo" : [ { "_id" : ObjectId("597e2f2bcd8724f48de489aa"), "continent" : "EU", "capital" : "Berlin", "languages" : "de", "geonameId" : 2921044, "south" : 47.2701236047002, "isoAlpha3" : "DEU", "north" : 55.0583836008072, "fipsCode" : "GM", "population" : "81802257", "east" : 15.0418156516163, "isoNumeric" : "276", "areaInSqKm" : "357021.0", "countryCode" : "DE", "west" : 5.8663152683722, "countryName" : "Germany", "continentName" : "Europe", "currencyCode" : "EUR" } ] }
+
+
+
+# Aggregations along with left join: Number of Nobel laureates by continent
+
+db.laureates.aggregate(
+  {$lookup: { from: "country", localField: "bornCountryCode", foreignField: "countryCode", as: "countryInfo" }},
+  {$group: {_id: '$countryInfo.continent', totalPrizes: {$sum: 1}}},
+  {$sort: {totalPrizes: -1}}
+);
+
+
+> db.laureates.aggregate(
+...   {$lookup: { from: "country", localField: "bornCountryCode", foreignField: "countryCode", as: "countryInfo" }},
+...   {$group: {_id: '$countryInfo.continent', totalPrizes: {$sum: 1}}},
+...   {$sort: {totalPrizes: -1}}
+... );
+{ "_id" : [ "EU" ], "totalPrizes" : 478 }
+{ "_id" : [ "NA" ], "totalPrizes" : 285 }
+{ "_id" : [ "AS" ], "totalPrizes" : 67 }
+{ "_id" : [ ], "totalPrizes" : 29 }
+{ "_id" : [ "AF" ], "totalPrizes" : 25 }
+{ "_id" : [ "OC" ], "totalPrizes" : 15 }
+{ "_id" : [ "SA" ], "totalPrizes" : 11 }
+
+

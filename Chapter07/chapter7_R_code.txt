@@ -1,0 +1,203 @@
+
+# Chapter 7
+
+# Centering & Scaling
+# ---
+scores <- c(45,66,66,55,55,52,61,64,65,68)scale(scores)
+
+
+# nearZeroVar
+# ---
+library(caret)repeated <- c(rep(100,9999),10) # 9999 values are 100 and the last value is 10random <- sample(100,10000,T) # 10,000 random values from 1 – 100data <- data.frame(random = random, repeated = repeated)nearZeroVar(data)# [1] 2names(data)[nearZeroVar(data)][1] "repeated"
+
+
+# Correlations
+# ---
+Install.packages("mlbench")Install.packages("corrplot")library(corrplot)library(mlbench)diab <- PimaIndiansDiabetes# To produce a correlogramcorrplot(cor(diab[,-ncol(diab)]), method="color", type="upper")# To get the actual numberscorrplot(cor(diab[,-ncol(diab)]), method="number", type="upper")correlated_columns <- findCorrelation(cor(diab[,-ncol(diab)]), cutoff = 0.5)correlated_columns
+
+
+
+# Data Sampling
+# ---
+library(mlbench)library(caret)diab     <- PimaIndiansDiabetesdiabsim  <- diabdiabrows <- nrow(diabsim)negrows  <- floor(.95 * diabrows)posrows  <- (diabrows - negrows)negrows# [1] 729posrows# [1] 39diabsim$diabetes[1:729]     <- as.factor("neg")diabsim$diabetes[-c(1:729)] <- as.factor("pos")table(diabsim$diabetes)# neg pos # 729  39 # We observe that in this simulated dataset, we have 729 occurrences of positive outcome and 39 occurrences of negative outcome# Method 1: Upsampling, i.e., increasing the number of observations marked as ‘pos’ (i.e., positive)upsampled_simdata <- upSample(diabsim[,-ncol(diabsim)], diabsim$diabetes)table(upsampled_simdata$Class)# neg pos # 729 729# NOTE THAT THE OUTCOME IS CALLED AS ‘Class’ and not ‘diabetes’# This is because of the use of the variable separately# We can always rename the column to revert to the original name# Method 2: Downsampling, i.e., reducing the number of observations marked as ‘pos’ (i.e., positive)downsampled_simdata <- downSample(diabsim[,-ncol(diabsim)], diabsim$diabetes)table(downsampled_simdata$Class)# neg pos # 39  39 
+
+
+# SMOTE
+# ---
+
+# Method 3: SMOTE# The function SMOTE is available in the R Package DMwR# In order to use it, we first need to install DmWR as followsinstall.packages ("DMwR")# Once the package has been installed, we will create a synthetic# Dataset in which we will increase the number of ‘neg’ records# Let us check once again the distribution of neg/pos in the datasettable(diabsim$diabetes)# neg pos # 729  39 # Using SMOTE we can create synthetic cases of ‘pos’ as followsdiabsyn <- SMOTE(diabetes ~ ., diabsim, perc.over = 500, perc.under = 150)# perc.over = 500 means, increase the occurrence of the minority# class by 500%, i.e., 39 + 5*39 = 39 + 195 = 234# perc.under = 150 means, that for each new record generated for the# Minority class, we will generate 1.5 cases of the majority class# In this case, we created 195 new records (500% of 39) and hence# we will generate 150% of 195 records = 195 * 150% = 195 * 1.5# = 292.5, or 292 (rounded down) new records# We can verify this by running the table command against the newly# Created synthetic dataset, diabsyntable(diabsyn$diabetes)# neg pos # 292 234 
+
+# ROSE
+# ---
+install.packages("ROSE")library(ROSE)# Loaded ROSE 0.0-3set.seed(1)diabsyn2 <- ROSE(diabetes ~ ., data=diabsim)table(diabsyn2$data$diabetes)# neg pos # 395 373
+
+# Data Imputation
+# ---
+
+library(DMwR)library(caret)diab <- PimaIndiansDiabetes# In the dataset, the column mass represents the body mass index# Of the individuals represented in the corresponding row# mass: Body mass index (weight in kg/(height in m)\^2)# Creating a backup of the diabetes dataframediabmiss_orig <- diab# Creating a separate dataframe which we will modifydiabmiss <- diabmiss_orig# Saving the original values for body massactual <- diabmiss_orig$mass# Change 91 values of mass to NA in the datasetdiabmiss$mass[10:100] <- NA# Number of missing values in masssum(is.na(diabmiss$mass))# 91# View the missing valuesdiabmiss[5:15,]# Test with using the mean, we will set all the missing values# To the mean value for the columndiabmiss$mass[is.na(diabmiss$mass)] <- mean(diabmiss$mass,na.rm = TRUE)# Check the values that have been imputeddata.frame(actual=actual[10:100], impute_with_mean=diabmiss$mass[10:100])# Check the Root-Mean-Squared-Error for the entire column# Root Mean Squared Error provides an estimate for the# Difference between the actual and the predicted values# On ‘average’diabmissdf <- data.frame(actual=actual, impute_with_mean=diabmiss$mass)rmse1 <- RMSE(diabmissdf$impute_with_mean,actual)rmse1# [1] 3.417476# We will re-run the exercise using knnImputation (from package DMwR)# Change the value of the records back to NAdiabmiss <- diabmiss_origdiabmiss$mass[10:100] <- NA# Perform knnImputationdiabknn <- knnImputation(diabmiss,k=25)# Check the RMSE value for the knnImputation methodrmse2 <- RMSE(diabknn$mass,actual)rmse2# [1] 3.093827# Improvement using the knnImputation methods in percentage terms100 * (rmse1-rmse2)/rmse1[1] 22.20689
+
+
+
+# createDataPartition
+# ---
+
+diab <- PimaIndiansDiabetes
+
+# We will use the createDataPartition function from caret to split
+# The data. The function produces a set of indices using which we
+# will create the corresponding training and test sets
+
+training_index <- createDataPartition(diab$diabetes, p = 0.80, list = FALSE, times = 1)
+
+# Creating the training set
+diab_train <- diab[training_index,]
+
+# Create the test set
+diab_test  <- diab[-training_index,]
+
+# Create the trainControl parameters for the model
+diab_control <- trainControl("repeatedcv", number = 3, repeats = 2, classProbs = TRUE, summaryFunction = twoClassSummary)
+
+# Build the model
+rf_model <- train(diabetes ~ ., data = diab_train, method = "rf", 
+                  preProc = c("center", "scale"), tuneLength = 5, trControl = diab_control, metric = "ROC")
+
+# Find the Variable Importance
+varImp(rf_model)
+
+# rf variable importance
+# 
+# Overall
+# glucose  100.000
+# mass      52.669
+# age       39.230
+# pedigree  24.885
+# pressure  12.619
+# pregnant   6.919
+# insulin    2.294
+# triceps    0.000
+
+# This indicates that glucose levels, body mass index and age are the top 3 predictors of diabetes.
+
+# caret also includes several useful plot functions. We can visualize the variable importance using the command:
+
+plot(varImp(rf_model))
+
+
+# Cross Validation
+# ---
+# Create the trainControl parameters for the model# The parameters indicate that a 3-Fold CV would be created# and that the process would be repeated 2 times (repeats)# The class probabilities in each run will be stored# And we’ll use the twoClassSummary* function to measure the model# Performancediab_control <- trainControl("repeatedcv", number = 3, repeats = 2, classProbs = TRUE, summaryFunction = twoClassSummary)# Build the model# We used the train function of caret to build the model# As part of the training process, we specified a tunelength** of 5# This parameter lets caret select a set of default model parameters# trControl = diab_control indicates that the model will be built# Using the cross-validation method specified in diab_control# Finally preProc = c("center", "scale") indicate that the data# Would be centered and scaled at each pass of the model iterationrf_model <- train(diabetes ~ ., data = diab_train, method = "rf", preProc = c("center", "scale"), tuneLength = 5, trControl = diab_control, metric = "ROC")
+
+
+# Create Model, Get Predictions
+# ---
+
+# Install the R Package e1071, if you haven’t already
+# By running install.packages("e1071")
+
+# Use the predict function and the rf_model that was previously built
+# To get the predictions on the test dataset
+# Note that we are not including the column diabetes in the test
+# dataset by using diab_test[,-ncol(diab_test)]
+
+predictions <- predict(rf_model, diab_test[,-ncol(diab_test)])
+
+# First few records predicted
+
+head(predictions)
+# [1] neg neg pos pos pos pos
+Levels: neg pos
+
+# The confusion matrix allows us to see the number of true positives
+# False positives, True negatives and False negatives
+
+cf <- confusionMatrix(predictions, diab_test$diabetes)
+cf
+
+# Confusion Matrix and Statistics
+# 
+# 		Reference
+# Prediction neg pos
+# 		neg  89  21
+# 		pos  11  32
+# 
+# Accuracy : 0.7908          
+# 95% CI : (0.7178, 0.8523)
+# No Information Rate : 0.6536          
+# P-Value [Acc > NIR] : 0.0001499       
+# 
+# Kappa : 0.5167          
+# Mcnemar's Test P-Value : 0.1116118       
+# 
+# Sensitivity : 0.8900          
+# Specificity : 0.6038          
+# Pos Pred Value : 0.8091          
+# Neg Pred Value : 0.7442          
+# Prevalence : 0.6536          
+# Detection Rate : 0.5817          
+# Detection Prevalence : 0.7190          
+# Balanced Accuracy : 0.7469          
+# 
+# 'Positive' Class : neg             
+
+# Let us check what the confusion matrix tells us
+# This indicates that of the records that were marked negative (neg)
+# We predicted 89 of them as negative and 11 as positive (i.e., they
+# were negative but we incorrectly classified them as a positive
+
+# We correctly identified 32 positives but incorrectly classified
+# 21 positives as negative
+
+#
+# 		Reference
+# Prediction neg pos
+# 		neg  89  21
+# 		pos  11  32
+
+# The overall accuracy was 79%
+# This can be improved (significantly) by using more 
+# Accuracy : 0.7908          
+
+# We can plot the model using plot(rf_model) as follows
+plot(rf_model)
+
+
+# And finally we can also visualize our confusion matrix using the
+# inbuilt fourfoldplot function in R
+
+fourfoldplot(cf$table)
+
+
+# Tutorial
+# ---
+library(doMC)
+registerDoMC(cores = 8)
+
+data("PimaIndiansDiabetes2",package = 'mlbench')
+set.seed(100)
+diab <- PimaIndiansDiabetes2
+
+diab <- knnImputation(diab)
+training_index <- createDataPartition(diab$diabetes, p = .8, list = FALSE, times = 1)
+
+diab_train <- diab[training_index,]
+diab_test  <- diab[-training_index,]
+
+diab_control <- trainControl("repeatedcv", number = 10, repeats = 3, search = "random", classProbs = TRUE)
+
+nn_model <- train(diabetes ~ ., data = diab_train, method = "nnet", 
+                  preProc = c("center", "scale"), trControl = diab_control, tuneLength = 10, metric = "Accuracy")
+
+
+varImp(nn_model)
+
+predictions <- predict(nn_model, diab_test[,-ncol(diab_test)])
+head(predictions)
+
+cf <- confusionMatrix(predictions, diab_test$diabetes)
+cf
+
+plot(nn_model)
+fourfoldplot(cf$table)
+
+

@@ -1,0 +1,12 @@
+
+# Download the oil import prices csv filecd /home/cloudera;wget -O oil.csv "https://stats.oecd.org/sdmx-json/data/DP_LIVE/.OILIMPPRICE.../OECD?contentType=csv&detail=code&separator=comma&csv-lang=en"# Cleanse the CSV File
+
+# Remove all quotation marks
+[cloudera@quickstart ~]$ sed -i 's/\"//g' oil.csv# Remove all non-printable characters (Source: http://alvinalexander.com/blog/post/linux-unix/how-remove-non-printable-ascii-characters-file-unix)[cloudera@quickstart ~]$ tr -cd '\11\12\15\40-\176' oil_.csv > oil_clean.csv# Rename oil_clean.csv back to oil.csv
+[cloudera@quickstart ~]$ mv oil_clean.csv oil.csvmv: overwrite `oil.csv'? yes# Hive commands to create the table and load data
+
+CREATE TABLE IF NOT EXISTS OIL	(location String, indicator String, subject String, measure String, 	frequency String, time String, value Float, flagCode String)	ROW FORMAT DELIMITED	FIELDS TERMINATED BY ','	LINES TERMINATED BY '\n'	STORED AS TEXTFILE	tblproperties("skip.header.line.count"="1");LOAD DATA LOCAL INPATH '/home/cloudera/oil.csv' INTO TABLE OIL;SELECT * FROM OIL;/* Queries */
+SELECT LOCATION, MIN(value) as MINPRICE, AVG(value) as AVGPRICE, MAX(value) as MAXPRICEFROM OILWHERE FREQUENCY LIKE "A"GROUP BY LOCATION;# Hive Join Exercise
+
+# ENTER THE FOLLOWING IN THE UNIX TERMINAL# DOWNLOAD LATITUDE-LONGITUDE CSV FILEcd /home/cloudera;wget -O latlong.csv "https://gist.githubusercontent.com/tadast/8827699/raw/7255fdfbf292c592b75cf5f7a19c16ea59735f74/countries_codes_and_coordinates.csv"# REMOVE QUOTATION MARKSsed -i 's/\"//g' latlong.csv# Hive commands to create the table and load data
+CREATE TABLE IF NOT EXISTS LATLONG	(country String, alpha2 String, alpha3 String, numCode Int, latitude Float, longitude Float)	ROW FORMAT DELIMITED	FIELDS TERMINATED BY ‘,’	LINES TERMINATED BY ‘\n’	STORED AS TEXTFILE	TBLPROPERTIES("skip.header.line.count"="1");LOAD DATA LOCAL INPATH '/home/cloudera/latlong.csv' INTO TABLE LATLONG;SELECT DISTINCT * FROM(SELECT location, avg(value) as AVGPRICE from oil GROUP BY location) xLEFT JOIN(SELECT TRIM(ALPHA3) AS alpha3, latitude, longitude from LATLONG) yON (x.location = y.alpha3);
