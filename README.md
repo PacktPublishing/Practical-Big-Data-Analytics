@@ -1,0 +1,38 @@
+# Practical Big Data Analytics
+This is the code repository for [Practical Big Data Analytics](https://www.packtpub.com/big-data-and-business-intelligence/practical-big-data-analytics?utm_source=github&utm_medium=repository&utm_campaign=9781783554393), published by [Packt](https://www.packtpub.com/?utm_source=github). It contains all the supporting project files necessary to work through the book from start to finish.
+## About the Book
+Big Data Analytics relates to the strategies used by organizations to collect, organize and analyze large amounts of data to bring out hidden patterns and insights from the data which otherwise cannot be analyzed through traditional systems.
+
+
+## Instructions and Navigation
+All of the code is organized into folders. Each folder starts with a number followed by the application name. For example, Chapter02.
+
+
+
+The code will look like the following:
+```
+"_id" : ObjectId("597cdbb193acc5c362e7ae97"),
+"firstName" : "Nina",
+"age" : 53,
+"frequentFlyer" : [
+"Delta",
+"JetBlue",
+"Delta
+```
+
+1. A general knowledge of Unix would be very helpful, although isn't mandatory
+2. Access to a computer with an internet connection will be needed in order to
+download the necessary tools and software used in the exercises
+3. No prior knowledge of the subject area has been assumed as such
+4. Installation instructions for all the software and tools have been provided in
+Chapter 3, The Analytics Toolkit.
+
+## Related Products
+* [Ultimate Big Data Application Development](https://www.packtpub.com/big-data-and-business-intelligence/ultimate-big-data-application-development?utm_source=github&utm_medium=repository&utm_campaign=9781788399951)
+
+* [Artificial Intelligence for Big Data](https://www.packtpub.com/big-data-and-business-intelligence/artificial-intelligence-big-data?utm_source=github&utm_medium=repository&utm_campaign=9781788472173)
+
+* [Practical Industrial Internet of Things Security](https://www.packtpub.com/business/practical-industrial-internet-things-security?utm_source=github&utm_medium=repository&utm_campaign=9781788832687)
+
+### Suggestions and Feedback
+[Click here](https://docs.google.com/forms/d/e/1FAIpQLSe5qwunkGf6PUvzPirPDtuy1Du5Rlzew23UBp2S-P3wB-GcwQ/viewform) if you have any feedback or suggestions.
